@@ -75,6 +75,9 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        env:
+          NEXT_PUBLIC_UPI_API: ${{ secrets.NEXT_PUBLIC_UPI_API }}
+          NEXT_PUBLIC_NIDA_API_URL: ${{ secrets.NEXT_PUBLIC_NIDA_API_URL }} # Example of additional variables
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -88,6 +91,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    env:
+      NEXT_PUBLIC_UPI_API: ${{ secrets.NEXT_PUBLIC_UPI_API }}
+      NEXT_PUBLIC_NIDA_API_URL: ${{ secrets.NEXT_PUBLIC_NIDA_API_URL }} # Example of additional variables
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
