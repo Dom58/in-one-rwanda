@@ -27,21 +27,22 @@ const Page = () => {
           <Link href="/" className="text-4xl text-blue-600"> <span className="mr-2 text-orange-600">{`< `}</span> </Link>
           UPIs management system
         </h1>
-        <p className="text-sm">A centralized system for managing Rwanda's UPI and 2020-2050 masterplan.</p>
+        <p className="text-sm">A centralized system for searching Rwanda's UPI for 2020-2050 masterplan.</p>
         <form onSubmit={handleSubmit} className="mt-4">
+          <p className="mb-1 text-gray-600">Land parcel UPI</p>
           <input
             type="text"
             value={upi}
             onChange={(e) => setUpi(e.target.value)}
-            placeholder="Enter UPI"
+            placeholder="Enter a valid UPI (e.g 1/01/01/01/0001)"
             className="w-full p-4 border border-white rounded-3xl focus:outline-none"
             required
           />
           <button
             type="submit"
-            className={`w-1/2 p-2 mt-4 mb-4 text-white bg-blue-500 rounded-3xl ${upi.length === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+            className={`w-1/2 p-2 mt-4 mb-4 text-white bg-orange-700 rounded-3xl ${upi.length === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           >
-            {isLoading ? "Processing..." : "Fetch UPI Data"}
+            {isLoading ? "Searching..." : "Search"}
           </button>
         </form>
 

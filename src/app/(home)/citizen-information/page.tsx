@@ -45,6 +45,7 @@ const Page = () => {
         </h1>
         <p className="text-sm">Facilitates easy access and retrieval of citizen information.</p>
         <form onSubmit={submitInformationTracker} className="mt-4">
+          <p className="mb-1 text-gray-600">National ID</p>
           <input
             type="text"
             value={nationalId}
@@ -59,9 +60,9 @@ const Page = () => {
           />
           <button
             type="submit"
-            className={`w-1/2 p-2 mt-4 mb-4 text-white bg-blue-500 rounded-3xl ${nationalId.length === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+            className={`w-1/2 p-2 mt-4 mb-4 text-white bg-orange-700 rounded-3xl ${nationalId.length === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           >
-            {loading ? "Processing..." : "Fetch ID Data"}
+            {loading ? "Searching..." : "Search"}
           </button>
         </form>
 
