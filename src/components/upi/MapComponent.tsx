@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { MapComponentProps } from '@/app/types';
 import L from 'leaflet';
+import { QRCodeCanvas } from 'qrcode.react';
 import 'leaflet/dist/leaflet.css';
 
 const MapComponent: React.FC<MapComponentProps> = ({ coordinates }) => {
@@ -27,12 +28,10 @@ const MapComponent: React.FC<MapComponentProps> = ({ coordinates }) => {
     popupAnchor: [1, -34],
     shadowSize: [41, 41],
   });
+  const mapUrl = `https://www.google.com/maps?q=${coordinates.lat},${coordinates.lon}`;
 
   const shareMap = () => {
-    const latitude = coordinates.lat;
-    const longitude = coordinates.lon;
-    const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-    const shareText = `Check out this location in Rwanda: ${latitude}, ${longitude}`;
+    const shareText = `Check out this location in Rwanda: ${coordinates.lat},${coordinates.lon}`;
     const shareData = {
       title: 'Rwanda Map',
       text: shareText,
@@ -63,7 +62,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ coordinates }) => {
               </Popup>
             </Marker>
           </MapContainer>
-          
+
           <p className='mt-6'>Share this Map and get the easiest way to navigate to that area.</p>
           <button
             onClick={shareMap}
@@ -71,6 +70,11 @@ const MapComponent: React.FC<MapComponentProps> = ({ coordinates }) => {
           >
             Share the Map
           </button>
+
+          <div className="mt-4">
+            <h2 className="text-lg font-bold">Scan to Open in Google Maps:</h2>
+            <QRCodeCanvas value={mapUrl} size={128} />
+          </div>
         </div>
       )}
     </>
