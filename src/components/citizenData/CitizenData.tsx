@@ -1,6 +1,7 @@
 "use client";
 
 import { INewCitizenDataResponse } from "@/app/types";
+import Link from "next/link";
 
 const CitizenData = ({ data }: { data: INewCitizenDataResponse }) => {
     const { identification: citizen } = data?.data || {};
@@ -21,6 +22,10 @@ const CitizenData = ({ data }: { data: INewCitizenDataResponse }) => {
                                         {citizen?.dateOfBirth}
                                     </span>
                                 </p>
+
+                                <p><strong className="mr-1">Father Names:</strong> {citizen?.fatherNames}</p>
+                                <p className="mb-4"><strong className="mr-1">Mother Names:</strong> {citizen?.motherNames}</p>
+
                                 <p><strong className="mr-1">Place Of Birth:</strong> {citizen?.placeOfBirth}</p>
                                 <p><strong className="mr-1">Country:</strong> {citizen.birthCountry}</p>
 
@@ -34,7 +39,7 @@ const CitizenData = ({ data }: { data: INewCitizenDataResponse }) => {
                                         {citizen?.placeOfIssue}
                                     </span>
                                 </p>
-                                <p><strong className="mr-1">Gender:</strong> {citizen?.sex}</p>
+                                <p className="mb-4"><strong className="mr-1">Gender:</strong> {citizen?.sex}</p>
                                 <p><strong className="mr-1">Civil Status:</strong> {citizen?.civilStatus}</p>
                                 <p><strong className="mr-1">Marital Status:</strong>
                                     <span className="text-orange-400">{citizen?.maritalStatus}</span>

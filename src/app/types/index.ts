@@ -1,33 +1,36 @@
 import { ReactNode } from "react";
 
 export type IHomeProps = {
-    children: ReactNode;
+  children: ReactNode;
 };
 
 type ICitizenDataProps = {
-    documentNumber: string;
-    surnames?: string;
-    foreName?: string;
-    dateOfBirth: string;
-    placeOfBirth?: string;
-    birthCountry?: string;
-    province?: string;
-    district?: string;
-    sector?: string;
-    cell?: string;
-    placeOfIssue?: string;
-    sex?: string;
-    civilStatus?: string;
-    maritalStatus?: string;
-    spouse?: string;
+  
+  documentNumber: string;
+  surnames?: string;
+  foreName?: string;
+  dateOfBirth: string;
+  placeOfBirth?: string;
+  birthCountry?: string;
+  province?: string;
+  district?: string;
+  sector?: string;
+  cell?: string;
+  placeOfIssue?: string;
+  sex?: string;
+  civilStatus?: string;
+  maritalStatus?: string;
+  spouse?: string;
+  fatherNames?: string;
+  motherNames?: string;
 }
 
 interface ICitizenDataResponse {
-    identification: ICitizenDataProps;
+  identification: ICitizenDataProps;
 };
 
 export interface INewCitizenDataResponse {
-    data: ICitizenDataResponse;
+  data: ICitizenDataResponse;
 };
 
 interface Coordinates {
