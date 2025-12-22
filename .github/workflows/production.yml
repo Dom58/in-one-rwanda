@@ -77,7 +77,10 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
           NEXT_PUBLIC_UPI_API: ${{ secrets.NEXT_PUBLIC_UPI_API }}
-          NEXT_PUBLIC_NIDA_API_URL: ${{ secrets.NEXT_PUBLIC_NIDA_API_URL }} # Example of additional variables
+          NEXT_PUBLIC_NIDA_API_URL: ${{ secrets.NEXT_PUBLIC_NIDA_API_URL }}
+          NEXT_PUBLIC_IREMBO_APPLICATION_API_URL: ${{ secrets.NEXT_PUBLIC_IREMBO_APPLICATION_API_URL }}
+          NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL: ${{ secrets.NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL }}
+          NEXT_PUBLIC_FOLEX_EXCHANGE: ${{ secrets.NEXT_PUBLIC_FOLEX_EXCHANGE }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -93,7 +96,10 @@ jobs:
     needs: build
     env:
       NEXT_PUBLIC_UPI_API: ${{ secrets.NEXT_PUBLIC_UPI_API }}
-      NEXT_PUBLIC_NIDA_API_URL: ${{ secrets.NEXT_PUBLIC_NIDA_API_URL }} # Example of additional variables
+      NEXT_PUBLIC_NIDA_API_URL: ${{ secrets.NEXT_PUBLIC_NIDA_API_URL }}
+      NEXT_PUBLIC_IREMBO_APPLICATION_API_URL: ${{ secrets.NEXT_PUBLIC_IREMBO_APPLICATION_API_URL }}
+      NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL: ${{ secrets.NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL }}
+      NEXT_PUBLIC_FOLEX_EXCHANGE: ${{ secrets.NEXT_PUBLIC_FOLEX_EXCHANGE }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

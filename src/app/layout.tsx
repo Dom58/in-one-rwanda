@@ -27,6 +27,6 @@ export default async function RootLayout({
 }
 
 export const metadata: Metadata = {
-  title: "Search UPIs data | Rwanda UPI management system",
-  description: "Search and find UPI efficiently and securely.",
+  title: "All in one Finder",
+  description: "Search and find important data efficiently and securely.",
 };

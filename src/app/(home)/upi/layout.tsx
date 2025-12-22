@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "UPIs | Rwanda UPI management system",
+  title: "UPIs | All in one finder system",
   description: "UPI Management System - Manage All UPIs efficiently and securely.",
 };
 
