@@ -3,14 +3,15 @@ import dynamic from 'next/dynamic';
 const MapComponent = dynamic(() => import('./MapComponent'), { ssr: false });
 
 const UpidataDisplay = ({ data }: { data: any }) => {
-    const { data: newData } = data && data;
+    const newData = data && data;
+
     return (
         <>
             {(!!newData && newData.owners?.length > 0) ? (
                 <>
                     <h1 className="mt-6 mb-5 text-xl font-bold">UPI Data Overview</h1>
                     <div className="grid max-w-full p-6 mx-auto space-x-4 space-y-6 bg-white rounded-lg shadow-lg lg:grid-cols-2 sm:grid-cols-1">
-                        <div className="mb-6">
+                        <div className="p-4 mb-6 shadow-sm rounded-2xl">
                             <h2 className="text-xl font-semibold">Land Information</h2>
                             <p><strong>UPI:</strong> {newData.upi}</p>
                             <p><strong>Size: </strong>
@@ -31,7 +32,9 @@ const UpidataDisplay = ({ data }: { data: any }) => {
                             <p><strong>Right Type:</strong> {newData.rightType}</p>
                             <p><strong>Remaining Lease Term:</strong> {newData.remainingLeaseTerm} years</p>
                             <p><strong>In Process:</strong> {newData.inProcess ? "Yes" : "No"}</p>
-                            <p><strong>Coordinates Reference System:</strong> {newData.coordinateReferenceSystem}</p>
+                            <p><strong>Is Under Mortgage:</strong> {newData.isUnderMortgage ? "Yes" : "No"}</p>
+                            <p><strong>Is Under Restriction:</strong> {newData.isUnderRestriction ? "Yes" : "No"}</p>
+                            {/* <p><strong>Coordinates Reference System:</strong> {newData.coordinateReferenceSystem}</p> */}
                         </div>
 
                         <div className="p-4 bg-gray-100 shadow-md rounded-2xl">
@@ -44,17 +47,17 @@ const UpidataDisplay = ({ data }: { data: any }) => {
                                         <p><strong>Country:</strong> {owner?.countryName}</p>
                                         <p><strong>Gender:</strong> {owner?.gender}</p>
                                         <p><strong>Marital Status:</strong>
-                                            <span className="text-orange-400"> {owner?.maritalStatus}</span>
+                                            <span className="text-orange-400"> {owner?.maritalStatus ?? '-'}</span>
                                         </p>
                                         <p><strong>Share Percentage:</strong>
-                                            <span className="text-orange-400"> {owner?.sharePercentage}</span>
+                                            <span className="text-orange-400"> {owner?.sharePercentage ?? '-'}</span>
                                         </p>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="mb-6">
+                        <div className="p-4 mb-6 shadow-sm rounded-2xl">
                             <h2 className="text-xl font-semibold">Representative Information</h2>
                             <p><strong>Name:</strong> {`${data?.representative?.surname} ${data?.representative?.foreNames}`}</p>
                             <p><strong>ID No:</strong> {newData.representative?.idNo}</p>
@@ -92,7 +95,7 @@ const UpidataDisplay = ({ data }: { data: any }) => {
                             ))}
                         </div>
 
-                        <div className="mb-6">
+                        <div className="p-4 mb-6 shadow-sm rounded-2xl">
                             <h2 className="text-xl font-semibold">Valuation Value</h2>
                             <p><strong>Minimum Price:</strong> {newData.valuationValue?.minPrice} RWF</p>
                             <p><strong>Maximum Price:</strong> {newData.valuationValue?.maxProce} RWF</p>
