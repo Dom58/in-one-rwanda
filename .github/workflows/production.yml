@@ -81,6 +81,7 @@ jobs:
           NEXT_PUBLIC_IREMBO_APPLICATION_API_URL: ${{ secrets.NEXT_PUBLIC_IREMBO_APPLICATION_API_URL }}
           NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL: ${{ secrets.NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL }}
           NEXT_PUBLIC_FOLEX_EXCHANGE: ${{ secrets.NEXT_PUBLIC_FOLEX_EXCHANGE }}
+          NEXT_PUBLIC_ACCESS_CODE: ${{ secrets.NEXT_PUBLIC_ACCESS_CODE }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -100,6 +101,7 @@ jobs:
       NEXT_PUBLIC_IREMBO_APPLICATION_API_URL: ${{ secrets.NEXT_PUBLIC_IREMBO_APPLICATION_API_URL }}
       NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL: ${{ secrets.NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL }}
       NEXT_PUBLIC_FOLEX_EXCHANGE: ${{ secrets.NEXT_PUBLIC_FOLEX_EXCHANGE }}
+      NEXT_PUBLIC_ACCESS_CODE: ${{ secrets.NEXT_PUBLIC_ACCESS_CODE }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
