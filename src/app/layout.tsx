@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import { Suspense } from "react";
 import { Provider } from "@/components/common/Provider";
 import "@/app/globals.css";
+import HikrTrackingScript from "@/components/common/HikrTrackingScript";
 
 const poppins = Poppins({
   preload: true,
@@ -19,7 +20,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={poppins.className} suppressContentEditableWarning>
         <Provider>
-          <Suspense> {children}</Suspense>
+          <Suspense>
+            <HikrTrackingScript websiteId={"5875884302"} />
+            {children}
+          </Suspense>
         </Provider>
       </body>
     </html>

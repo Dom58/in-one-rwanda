@@ -6,5 +6,6 @@ export const AppConfig = {
     application: process.env.NEXT_PUBLIC_IREMBO_APPLICATION_API_URL!,
     findBill: process.env.NEXT_PUBLIC_IREMBO_FIND_BILL_API_URL!
   },
-  forexExchange: process.env.NEXT_PUBLIC_FOLEX_EXCHANGE!
+  forexExchange: process.env.NEXT_PUBLIC_FOLEX_EXCHANGE!,
+  hikrlinkWebsiteId: process.env.NEXT_PUBLIC_HIKRLINK_WEBSITE_ID!
 };
