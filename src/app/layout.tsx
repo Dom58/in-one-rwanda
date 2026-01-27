@@ -18,7 +18,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className} suppressContentEditableWarning>
+      <body className={poppins.className} suppressContentEditableWarning suppressHydrationWarning={true}>
         <Provider>
           <Suspense>
             <HikrTrackingScript websiteId={"5875884302"} />

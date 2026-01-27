@@ -5,10 +5,19 @@ import React from "react";
 
 export default function Home() {
   const [isVisible, setIsVisible] = React.useState(false);
+  const [isMounted, setIsMounted] = React.useState(false);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div className="flex items-center justify-center min-h-screen text-xl font-medium text-orange-600">Loading...</div>;
+  }
 
   return (
     <div className="flex items-center">

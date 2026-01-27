@@ -17,14 +17,21 @@ const HikrTrackingScript: FC<HikrTrackingScriptProps> = ({
   return (
     <>
       <Script
-        src="http://localhost:9000/script.js" //replace with the actual path to the CDN script where deployed
-        //E.g: http://localhost:9000/script.js or /script.js from your public folder
+        //src="http://localhost:9000/script.js" //replace with the actual path to the CDN script where deployed
+        //E.g: https://static.staticsave.com/hikrcdn/script.js or /script.js from your public folder
         strategy="lazyOnload"
         onLoad={() => {
-          window.hikr.createUser(websiteId)
           window.hikr.config({ websiteId: websiteId, userConsent: true })
             .then(() => console.log('Configuration successful'))
             .catch((error) => console.error('Configuration failed', error));
+
+          window.hikr.pushData({
+            eventType: "click",
+            collectionName: "userInteractions",
+            data: "",
+            userConsent: true
+          });
+
         }}
         onError={(e) => {
           console.error('Script failed to load:', e);
