@@ -1,40 +1,26 @@
 "use client";
 
 import { AppConfig } from "@/app/configs";
-import { INewCitizenDataResponse } from "@/app/types";
-import CitizenData from "@/components/citizenData/CitizenData";
-import { findNationalIdData } from "@/services";
-import { useMutation } from "@tanstack/react-query";
+import { IRSSBData } from "@/app/types";
+import { queryClient } from "@/components/common/Provider";
+import RssbDisplay from "@/components/rssb/RssbDisplay";
+import { findRssbData } from "@/services";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+const REQUIRED_CODE_LENGTH = String(AppConfig.accessCode).length;
 
 const Page = () => {
-  const [nationalId, setNationalId] = useState("");
-  const [data, setData] = useState<INewCitizenDataResponse | null>(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [phoneNumber, setPhonenumber] = useState("");
+  const [queryKey, setQueryKey] = useState("");
   const [accessCode, setAccessCode] = useState("");
   const [isAccessValid, setIsAccessValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const REQUIRED_CODE_LENGTH = String(AppConfig.accessCode).length;
-
-  const mutation = useMutation({
-    mutationFn: findNationalIdData,
-    onError(error: any) {
-      const errorMessage = error.response?.data?.message
-        ? error.response?.data?.message
-        : error.response?.data?.error.content || error.message;
-      setError(errorMessage);
-      setNationalId("");
-      setLoading(false);
-    },
-    onSuccess: (res) => {
-      setLoading(false);
-      setData(res);
-      setError("");
-      setNationalId("");
-    },
+  const { data, isLoading, error } = useQuery({
+    queryKey: [queryKey, phoneNumber],
+    queryFn: () => findRssbData(phoneNumber),
+    enabled: !!queryKey && isAccessValid,
   });
 
   const setAccessWithExpiry = (key: string, value: string) => {
@@ -44,6 +30,16 @@ const Page = () => {
       expiry: now.getTime() + 24 * 60 * 60 * 1000,
     };
     localStorage.setItem(key, JSON.stringify(item));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPhonenumber(value);
+
+    if (queryKey) {
+      setQueryKey("");
+      queryClient.removeQueries({ queryKey: ["rssb-data"] });
+    }
   };
 
   const checkAccessCode = (code: number) => {
@@ -63,10 +59,9 @@ const Page = () => {
     }
   };
 
-  const submitInformationTracker = (e: React.FormEvent<HTMLFormElement>) => {
-    setLoading(true);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutation.mutate(nationalId);
+    setQueryKey("rssb-data");
   };
 
   useEffect(() => {
@@ -95,14 +90,16 @@ const Page = () => {
     <div className="flex items-center justify-center">
       <main>
         <h1 className="flex text-xl font-extrabold">
-          <Link href="/" className="text-2xl text-blue-600"> <span className="mr-2 text-orange-600">{`< `}</span> </Link>
-          Rwanda national ID system
+          <Link href="/" className="text-2xl text-blue-600">
+            <span className="mr-2 text-orange-600">{`< `}</span>
+          </Link>
+          RSSB Number Lookup
         </h1>
 
         <div className="p-2 mt-1 rounded-lg bg-gray-50/20">
           <ul className="mt-1 space-y-1 text-sm list-disc list-inside">
-            <li>Facilitates easy access and fetch the citizen information.</li>
-            <li>Easy access and get the citizen information from the national ID.</li>
+            <li>Find your RSSB number by your phone number.</li>
+            <li>View your RSSB number details.</li>
           </ul>
         </div>
 
@@ -129,33 +126,34 @@ const Page = () => {
           </form>
         )}
 
-        <form onSubmit={submitInformationTracker} className={`mt-4 ${!isAccessValid ? 'blur-xs pointer-events-none' : ''}`}>
-          <p className="mb-1 text-gray-600">National ID</p>
+        <form onSubmit={handleSubmit} className={`mt-4 ${!isAccessValid ? 'blur-xs pointer-events-none' : ''}`}>
+          <p className="mb-1 text-gray-600">Your phone number</p>
           <input
             type="text"
-            value={nationalId}
-            name="nationalId"
-            onChange={(e) => {
-              setNationalId(e.target.value);
-              setError("");
-              setData(null);
-            }}
-            placeholder="Enter national ID"
+            value={phoneNumber}
+            name="phoneNumber"
+            onChange={handleInputChange}
+            placeholder="Enter your phone number"
             className="w-full p-4 border border-white rounded-3xl focus:outline-none"
             required
             disabled={!isAccessValid}
           />
           <button
             type="submit"
-            className={`w-1/2 p-2 mt-4 mb-4 text-white bg-orange-700 rounded-3xl ${nationalId.length === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-            disabled={!isAccessValid}
+            disabled={!isAccessValid || isLoading}
+            className={`w-1/2 p-2 mt-4 mb-4 text-white bg-orange-700 rounded-3xl ${phoneNumber.length === 0 || isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+              }`}
           >
-            {loading ? "Searching..." : "Search"}
+            {isLoading ? "Searching..." : "Search"}
           </button>
         </form>
 
-        {error && <p className="text-red-500">Error fetching data: {error}</p>}
-        {data && <CitizenData data={data} />}
+        {queryKey && (
+          <>
+            {error && <p className="text-red-600">Error fetching data: {error.message}</p>}
+            {data && <RssbDisplay data={data as IRSSBData} />}
+          </>
+        )}
       </main>
     </div>
   );

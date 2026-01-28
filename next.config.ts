@@ -6,7 +6,7 @@ const path = require('path');
 const isProd = process.env.NODE_ENV === 'production';
 const nextConfig = {
   // basePath: isProd ? '/rwanda-masterplan' : '',
-  output: 'export',
+  // output: 'export',
 
   // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
   // trailingSlash: true,
@@ -21,7 +21,15 @@ const nextConfig = {
   },
   turbopack: {
     root: path.resolve(__dirname),
-  }
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/rssb-proxy/:path*',
+        destination: 'https://apigateway.rssb.rw/imisanzu/api/v1/:path*',
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

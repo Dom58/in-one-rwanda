@@ -1,11 +1,13 @@
 "use client";
 
 import { AppConfig } from "@/app/configs";
+import { queryClient } from "@/components/common/Provider";
 import UpidataDisplay from "@/components/upi/UpidataDisplay";
 import { fetchUpiData } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+const REQUIRED_CODE_LENGTH = String(AppConfig.accessCode).length;
 
 const Page = () => {
   const [upi, setUpi] = useState("");
@@ -14,10 +16,8 @@ const Page = () => {
   const [isAccessValid, setIsAccessValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const REQUIRED_CODE_LENGTH = String(AppConfig.accessCode).length;
-
   const { data, isLoading, error } = useQuery({
-    queryKey: [queryKey],
+    queryKey: [queryKey, upi],
     queryFn: () => fetchUpiData(upi),
     enabled: !!queryKey && isAccessValid,
   });
@@ -45,6 +45,16 @@ const Page = () => {
     } else {
       setErrorMessage("Invalid access code. Please contact the system admin to provide the code.");
       setAccessCode("");
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUpi(value);
+
+    if (queryKey) {
+      setQueryKey("");
+      queryClient.removeQueries({ queryKey: ["upi-data"] });
     }
   };
 
@@ -100,6 +110,7 @@ const Page = () => {
               </label>
               <input
                 type="password"
+                name="password"
                 value={accessCode}
                 onChange={(e) => setAccessCode(e.target.value)}
                 placeholder="Enter access password"
@@ -119,7 +130,8 @@ const Page = () => {
           <input
             type="text"
             value={upi}
-            onChange={(e) => setUpi(e.target.value)}
+            name="upi"
+            onChange={handleInputChange}
             placeholder="Enter a valid UPI (e.g 1/01/01/01/0001)"
             className="w-full p-4 border border-white rounded-3xl focus:outline-none"
             required
@@ -128,14 +140,16 @@ const Page = () => {
           <button
             type="submit"
             className={`w-1/2 p-2 mt-4 mb-4 text-white bg-orange-700 rounded-3xl ${upi.length === 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-            disabled={!isAccessValid}
+            disabled={!isAccessValid || isLoading}
           >
             {isLoading ? "Searching..." : "Search"}
           </button>
         </form>
-
-        {error && <p>Error fetching data: {error.message}</p>}
-        {data && <UpidataDisplay data={data.data} />}
+        {queryKey && (
+          <>
+            {error && <p>Error fetching data: {error.message}</p>}
+            {data && <UpidataDisplay data={data.data} />}</>
+        )}
       </main>
     </div>
   );

@@ -48,6 +48,7 @@ const Page = () => {
           <input
             type="text"
             value={applicationNumber}
+            name="applicationNumber"
             onChange={(e) => {
               setIremboApplicationNumber(e.target.value);
               setError("");

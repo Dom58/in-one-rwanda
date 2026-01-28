@@ -1,5 +1,5 @@
 import { AppConfig } from "@/app/configs";
-import { INewCitizenDataResponse } from "@/app/types";
+import { INewCitizenDataResponse, IRSSBData } from "@/app/types";
 import Axios from "axios";
 
 export const fetchUpiData = async (upi: string): Promise<any> => {
@@ -27,5 +27,10 @@ export const findIremboApplicationData = async (applicationNumber: string): Prom
     'X-Requested-With': 'XMLHttpRequest',
   };
   const response = await Axios.get(url, { headers });
+  return response.data;
+};
+
+export const findRssbData = async (phoneNumber: string): Promise<IRSSBData> => {
+  const response = await Axios.get(`/api/check-phone?phoneNumber=${phoneNumber}`);
   return response.data;
 };

@@ -41,3 +41,8 @@ interface Coordinates {
 export interface MapComponentProps {
   coordinates: Coordinates;
 }
+
+export interface IRSSBData {
+  isEmployee: boolean;
+  rssbNumber: string;
+}

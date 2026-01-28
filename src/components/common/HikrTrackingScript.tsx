@@ -17,7 +17,7 @@ const HikrTrackingScript: FC<HikrTrackingScriptProps> = ({
   return (
     <>
       <Script
-        src="http://localhost:9000/script.js" 
+        src="http://localhost:9000/script.js"
         //E.g: https://static.staticsave.com/hikrcdn/script.js or DEployed CDN link
         strategy="lazyOnload"
         onLoad={() => {

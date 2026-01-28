@@ -50,13 +50,19 @@ export default function Home() {
 
         <div className="flex mb-2">
           <Link href="/citizen-information" className="p-2 px-4 text-orange-600 bg-white border-amber-50 text-md rounded-3xl hover:text-orange-700 hover:bg-gray-100">
-            Search national ID information
+            Search Indangamuntu information
+          </Link>
+        </div>
+
+        <div className="flex mb-2">
+          <Link href="/rssb-number" className="p-2 px-4 text-orange-600 bg-white border-amber-50 text-md rounded-3xl hover:text-orange-700 hover:bg-gray-100">
+            Search RSSB number
           </Link>
         </div>
 
         <div className="flex mb-2">
           <Link href="/irembo-applications" className="p-2 px-4 text-orange-600 bg-white border-amber-50 text-md rounded-3xl hover:text-orange-700 hover:bg-gray-100">
-            Search your Irembo application status
+            Search Irembo application status
           </Link>
         </div>
       </main>
