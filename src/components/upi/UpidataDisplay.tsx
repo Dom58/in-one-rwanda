@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 const MapComponent = dynamic(() => import('./MapComponent'), { ssr: false });
 
@@ -43,7 +44,13 @@ const UpidataDisplay = ({ data }: { data: any }) => {
                                 {newData.owners && newData.owners?.map((owner: any, index: any) => (
                                     <div key={index} className="py-2 border-b">
                                         <p><strong>Name:</strong> {owner?.fullName}</p>
-                                        <p><strong>ID No:</strong> {owner?.idNo}</p>
+                                        <p><strong>ID No:</strong>
+                                            {owner?.idNo &&
+                                                (<Link className="ml-2 text-blue-800 underline" href={`/citizen-information?nationalId=${owner?.idNo}`}>
+                                                    {owner?.idNo}
+                                                </Link>)
+                                            }
+                                        </p>
                                         <p><strong>Country:</strong> {owner?.countryName}</p>
                                         <p><strong>Gender:</strong> {owner?.gender}</p>
                                         <p><strong>Marital Status:</strong>
@@ -60,7 +67,13 @@ const UpidataDisplay = ({ data }: { data: any }) => {
                         <div className="p-4 mb-6 shadow-sm rounded-2xl">
                             <h2 className="text-xl font-semibold">Representative Information</h2>
                             <p><strong>Name:</strong> {`${data?.representative?.surname} ${data?.representative?.foreNames}`}</p>
-                            <p><strong>ID No:</strong> {newData.representative?.idNo}</p>
+                            <p><strong>ID No:</strong>
+                                {newData.representative?.idNo && (
+                                    <Link className="ml-2 text-blue-800 underline" href={`/citizen-information?nationalId=${newData.representative?.idNo}`}>
+                                        {newData.representative?.idNo}
+                                    </Link>)
+                                }
+                            </p>
                             <p><strong>Country:</strong> {newData.representative?.countryName}</p>
                             <p><strong>Gender:</strong> {newData.representative?.gender}</p>
                             <p><strong>Marital Status:</strong> {newData.representative?.maritalStatus}</p>

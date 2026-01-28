@@ -8,17 +8,19 @@ import { findNationalIdData } from "@/services";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+const REQUIRED_CODE_LENGTH = String(AppConfig.accessCode).length;
 
 const Page = () => {
-  const [nationalId, setNationalId] = useState("");
+  const searchParams = useSearchParams();
+  const paramNationalId = searchParams.get("nationalId") || ""
+  const [nationalId, setNationalId] = useState(paramNationalId);
   const [data, setData] = useState<INewCitizenDataResponse | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [accessCode, setAccessCode] = useState("");
   const [isAccessValid, setIsAccessValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const REQUIRED_CODE_LENGTH = String(AppConfig.accessCode).length;
 
   const mutation = useMutation({
     mutationFn: findNationalIdData,
@@ -37,6 +39,13 @@ const Page = () => {
       setNationalId("");
     },
   });
+
+  useEffect(() => {
+    if (paramNationalId) {
+      setNationalId(paramNationalId);
+      submitInformationTracker();
+    }
+  }, [paramNationalId]);
 
   const setAccessWithExpiry = (key: string, value: string) => {
     const now = new Date();
@@ -64,9 +73,9 @@ const Page = () => {
     }
   };
 
-  const submitInformationTracker = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitInformationTracker = (e?: React.FormEvent<HTMLFormElement>) => {
+    if (e) e.preventDefault();
     setLoading(true);
-    e.preventDefault();
     mutation.mutate(nationalId);
   };
 
