@@ -1,5 +1,6 @@
 "use client";
 
+import PasswordChecker from "@/components/common/PasswordChecker";
 import { findIremboApplicationData } from "@/services";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -42,7 +43,13 @@ const Page = () => {
           <Link href="/" className="text-2xl text-blue-600"> <span className="mr-2 text-orange-600">{`< `}</span> </Link>
           Irembo application status
         </h1>
-        <p className="text-sm">Facilitates easy access and retrieval of Irembo application status.</p>
+
+        <div className="p-2 mt-1 rounded-lg bg-gray-50/20">
+          <ul className="mt-1 space-y-1 text-sm list-disc list-inside">
+            <li>acilitates easy access and retrieval of Irembo application status.</li>
+          </ul>
+        </div>
+
         <form onSubmit={submitInformationTracker} className="mt-4">
           <p className="mb-1 text-gray-600">Irembo Application Number</p>
           <input

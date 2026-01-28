@@ -1,6 +1,7 @@
 "use client";
 
 import { AppConfig } from "@/app/configs";
+import PasswordChecker from "@/components/common/PasswordChecker";
 import { queryClient } from "@/components/common/Provider";
 import UpidataDisplay from "@/components/upi/UpidataDisplay";
 import { fetchUpiData } from "@/services";
@@ -102,28 +103,13 @@ const Page = () => {
           </ul>
         </div>
 
-        {!isAccessValid && (
-          <form onSubmit={handleVerifyAccessCode} className="mt-4">
-            <div className="mb-2">
-              <label className="mb-1 text-gray-600" htmlFor="accessCode">
-                Access password (shared by system admin)
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={accessCode}
-                onChange={(e) => setAccessCode(e.target.value)}
-                placeholder="Enter access password"
-                className="w-full p-4 border border-white rounded-3xl focus:outline-none"
-                required
-              />
-            </div>
-            <button type="submit" className="flex p-2 mt-2 mb-1 text-white bg-[#fe6787] rounded-3xl">
-              Verify access password
-            </button>
-            {errorMessage && <p className="mt-1 text-sm text-red-600">{errorMessage}</p>}
-          </form>
-        )}
+        <PasswordChecker
+          isAccessValid={isAccessValid}
+          handleVerifyAccessCode={handleVerifyAccessCode}
+          accessCode={accessCode}
+          setAccessCode={setAccessCode}
+          errorMessage={errorMessage}
+        />
 
         <form onSubmit={handleSubmit} className={`mt-4 ${!isAccessValid ? 'blur-xs pointer-events-none' : ''}`}>
           <p className="mb-1 text-gray-600">Land parcel UPI</p>

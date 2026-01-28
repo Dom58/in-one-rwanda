@@ -46,3 +46,11 @@ export interface IRSSBData {
   isEmployee: boolean;
   rssbNumber: string;
 }
+
+export interface IPasswordChecker {
+    isAccessValid: boolean;
+    handleVerifyAccessCode: (e: React.FormEvent) => void;
+    accessCode: string;
+    setAccessCode: React.Dispatch<React.SetStateAction<string>>;
+    errorMessage: string | null;
+}
