@@ -15,18 +15,8 @@ export const findNationalIdData = async (nationalIdentification: string): Promis
 };
 
 export const findIremboApplicationData = async (applicationNumber: string): Promise<any> => {
-  const url = AppConfig.irembo.application!;
-  const headers = {
-    Accept: 'application/json, text/plain, */*',
-    "Access-Control-Allow-Origin": '*',
-    "Access-Control-Allow-Methods": "GET",
-    'Applicationnumber': applicationNumber,
-    'Nls': 'English',
-    Referer: 'https://irembo.gov.rw/support/documents',
-    'User-Agent': navigator.userAgent,
-    'X-Requested-With': 'XMLHttpRequest',
-  };
-  const response = await Axios.get(url, { headers });
+  const url = `/api/irembo-application?applicationNumber=${applicationNumber}`;
+  const response = await Axios.get(url);
   return response.data;
 };
 

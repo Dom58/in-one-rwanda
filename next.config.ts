@@ -19,6 +19,10 @@ const nextConfig = {
   //       source: '/rssb-proxy/:path*',
   //       destination: 'https://apigateway.rssb.rw/imisanzu/api/v1/:path*',
   //     },
+  //     {
+  //       source: '/irembo-proxy/:path*',
+  //       destination: 'https://irembo.gov.rw/irembo/rest/:path*',
+  //     },
   //   ]
   // },
 }
