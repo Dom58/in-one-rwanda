@@ -16,7 +16,7 @@ const RssbDisplay = ({ data }: { data: IRSSBData | null }) => {
 
     return (
         <div className="flex flex-col items-center justify-center w-full px-4 py-6 mt-6 bg-white border border-gray-200 rounded-lg shadow-md">
-            {!!data ? (
+            {(!!data && !!data.rssbNumber) ? (
                 <>
                     <h1 className="mb-2 text-xl font-bold">Your RSSB Number</h1>
                     <p className='text-sm'>
